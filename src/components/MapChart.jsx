@@ -1,76 +1,86 @@
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
-import worldTopoJSON from "@highcharts/map-collection/custom/world.topo.json";
 import brazilTopoJSON from "@highcharts/map-collection/countries/br/br-all.topo.json";
 
 const FlightRoutesChart = () => {
-  const worldGeoJSON = Highcharts.geojson(brazilTopoJSON, "map");
+  const brazilGeoJSON = Highcharts.geojson(brazilTopoJSON, "map");
 
   const options = {
-  chart: {
-    map: worldGeoJSON,
-    minZoom: 0.5,
-  },
-  title: { text: "Simple Flight Routes" },
-  mapNavigation: { enabled: true, enableMouseWheelZoom: true },
-  series: [
-    {
-      name: "World Map",
-      mapData: worldGeoJSON,
-      borderColor: "#606060",
-      nullColor: "#f0f0f0",
-      showInLegend: false,
+    chart: {
+      map: brazilGeoJSON,
+      minZoom: 0.5,
+      height: '65%',
     },
-    {
-      type: "mapline",
-      name: "Flight Route",
-      color: "#FF0000",
-      lineWidth: 2,
-      data: [
-        {
-          type: "Feature",
-          geometry: {
-            type: "LineString",
-            coordinates: [
-              [-46.6333, -23.5505],
-              [2.3522, 48.8566],
-            ],
+    title: { text: "Rotas de avião dentre cidades brasileiras" },
+    mapNavigation: { enabled: true, enableMouseWheelZoom: true },
+    series: [
+      {
+        name: "Brazil Map",
+        mapData: brazilGeoJSON,
+        borderColor: "#606060",
+        nullColor: "#f0f0f0",
+        showInLegend: false,
+      },
+      {
+        type: "mapline",
+        name: "Rota do vôo",
+        color: "#008000",
+        lineWidth: 2,
+        data: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "LineString",
+              coordinates: [
+                [-47.9292, -15.7942], // Distrito Federal
+                [-46.6333, -23.5505], // São Paulo
+              ],
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "LineString",
+              coordinates: [
+                [-46.6333, -23.5505], // São Paulo
+                [-42.021, -22.129], // Rio de Janeiro
+              ],
+            },
+          },
+        ],
+        enableMouseTracking: false,
+      },
+      {
+        type: "mappoint",
+        name: "Cidades",
+        color: "#0000FF",
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+          style: {
+            fontWeight: 'bold',
+            color: '#000000',
+            textOutline: '1px white'
           },
         },
-        {
-          type: "Feature",
-          geometry: {
-            type: "LineString",
-            coordinates: [
-              [-74.006, 40.7128],
-              [139.6917, 35.6895],
-            ],
-          },
-        },
-      ],
-      enableMouseTracking: false,
-    },
-    {
-      type: "mappoint",
-      name: "Cities",
-      color: "#0000FF",
-      data: [
-        { name: "São Paulo", lat: -23.5505, lon: -46.6333 },
-        { name: "Paris", lat: 48.8566, lon: 2.3522 },
-        { name: "New York", lat: 40.7128, lon: -74.006 },
-        { name: "Tokyo", lat: 35.6895, lon: 139.6917 },
-      ],
-    },
-  ],
-};
-
+        data: [
+          { name: "São Paulo", lat: -23.5505, lon: -46.6333 },
+          { name: "Rio de Janeiro", lat: -22.129, lon: -42.021 },
+          { name: "Distrito Federal", lat: -15.7942, lon: -47.9292 },
+        ],
+      },
+    ],
+  };
 
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      constructorType="mapChart"
-      options={options}
-    />
+    <div className="w-full h-[500px] sm:h-[600px] md:h-[700px]">
+      <HighchartsReact
+        highcharts={Highcharts}
+        constructorType="mapChart"
+        options={options}
+        containerProps={{ style: { width: "100%", height: "100%" } }}
+      />
+    </div>
   );
 };
 
