@@ -1,9 +1,13 @@
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import brazilTopoJSON from "@highcharts/map-collection/countries/br/br-all.topo.json";
+import { useGetAirports } from "../hooks/useGetAirports"
 
 const FlightRoutesChart = () => {
   const brazilGeoJSON = Highcharts.geojson(brazilTopoJSON, "map");
+
+
+  const {data: airports } = useGetAirports()
 
   const options = {
     chart: {
@@ -63,11 +67,7 @@ const FlightRoutesChart = () => {
             textOutline: '1px white'
           },
         },
-        data: [
-          { name: "São Paulo", lat: -23.5505, lon: -46.6333 },
-          { name: "Rio de Janeiro", lat: -22.129, lon: -42.021 },
-          { name: "Distrito Federal", lat: -15.7942, lon: -47.9292 },
-        ],
+        data: airports,
       },
     ],
   };
