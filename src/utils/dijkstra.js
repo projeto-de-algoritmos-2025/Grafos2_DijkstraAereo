@@ -1,19 +1,19 @@
 export function dijkstra(airports, routes, sourceId, targetId) {
-  const airportMap = Object.fromEntries(airports.map(a => [a.AirportID, a]));
+  const airportMap = Object.fromEntries(airports.map(a => [a.id, a]));
   const graph = {};
+
   routes.forEach(route => {
-    if (!graph[route.SourceAirportID]){
-        graph[route.SourceAirportID] = [];
-    }
-    graph[route.SourceAirportID].push({
-    id: route.DestinationAirportID,
-    distance: route.Distance 
+    if (!graph[route.sourceId]) graph[route.sourceId] = [];
+    graph[route.sourceId].push({
+      id: route.destinationId,
+      distance: route.distanceKm
     });
   });
 
   const distances = {};
   const previous = {};
   const queue = new Set(Object.keys(airportMap));
+
   Object.keys(airportMap).forEach(id => distances[id] = Infinity);
   distances[sourceId] = 0;
 
@@ -22,6 +22,7 @@ export function dijkstra(airports, routes, sourceId, targetId) {
     queue.forEach(id => {
       if (minNode === null || distances[id] < distances[minNode]) minNode = id;
     });
+
     if (minNode === targetId || distances[minNode] === Infinity) break;
 
     queue.delete(minNode);
@@ -43,9 +44,5 @@ export function dijkstra(airports, routes, sourceId, targetId) {
   }
   if (curr === sourceId) path.unshift(sourceId);
 
-  if(path.length){
-    return path
-  } else {
-    return [];
-  }
+  return path;
 }

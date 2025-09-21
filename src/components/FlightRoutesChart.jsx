@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import brazilTopoJSON from "@highcharts/map-collection/countries/br/br-all.topo.json";
 import { formatAirportData } from "../utils/formatAirportData";
 import { formatRoutesData } from "../utils/formatRoutesData";
+import { useShortestPath } from "../hooks/useShortestPath";
 
 const FlightRoutesChart = ({ airports, routes, selectedOrigin, selectedDestination }) => {
   const brazilGeoJSON = Highcharts.geojson(brazilTopoJSON, "map");
@@ -32,6 +33,20 @@ const FlightRoutesChart = ({ airports, routes, selectedOrigin, selectedDestinati
   }, [formattedRoutesData, selectedOrigin, selectedDestination]);
 
 
+  const shortestPath = useShortestPath(formattedAirportData, formattedRoutesData, selectedOrigin, selectedDestination);
+
+  const highlightedRoutes = [];
+  if (shortestPath.length > 1) {
+    for (let i = 0; i < shortestPath.length - 1; i++) {
+      const source = shortestPath[i];
+      const destination = shortestPath[i + 1];
+      const route = formattedRoutesData.find(
+        r => r.sourceId === source && r.destinationId === destination
+      );
+      if (route) highlightedRoutes.push(route);
+    }
+  }
+
   const options = {
     chart: {
       map: brazilGeoJSON,
@@ -58,6 +73,17 @@ const FlightRoutesChart = ({ airports, routes, selectedOrigin, selectedDestinati
         color: "#008000",
         lineWidth: 2,
         data: displayedRoutes,
+        enableMouseTracking: true,
+        tooltip: {
+          pointFormat: "De <b>{point.source}</b> para <b>{point.destination}</b><br>Distância: <b>{point.distanceKm} km</b>",
+        },
+      },
+      {
+        type: "mapline",
+        name: "Menor Caminho",
+        color: "#1a6dccff",
+        lineWidth: 3,
+        data: highlightedRoutes,
         enableMouseTracking: true,
         tooltip: {
           pointFormat: "De <b>{point.source}</b> para <b>{point.destination}</b><br>Distância: <b>{point.distanceKm} km</b>",
