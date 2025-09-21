@@ -7551,7 +7551,7 @@ AirportID,Name,City,Country,IATA,ICAO,Latitude,Longitude
 13497,"Fazenda Mequens Airport","ALTA FLORESTA D'OESTE","Brazil",\N,"SJTF",-13.061944007873535,-62.25749969482422,552,-4,"S",\N,"airport","OurAirports"
 13498,"Prainha Airport","APUI","Brazil",\N,"SWYN",-7.17287015914917,-59.839599609375,197,-4,"S",\N,"airport","OurAirports"
 13499,"Mostardas Airport","SANTO ANTONIO DO MATUPI","Brazil",\N,"SSMT",-31.103599548339844,-50.910301208496094,59,-4,"S",\N,"airport","OurAirports"
-13500,"Santo Domingo Airport","CONSELVAN","Brazil",\N,"SCSN",-33.65639877319336,-71.6144027709961,246,-4,"S",\N,"airport","OurAirports"
+13500,"Santo Domingo Airport","CONSELVAN","Chile",\N,"SCSN",-33.65639877319336,-71.6144027709961,246,-4,"S",\N,"airport","OurAirports"
 13502,"Adampur Airport","Adampur","India","AIP","VIAX",31.4338,75.758797,775,5.5,"N",\N,"airport","OurAirports"
 13511,"Vijayanagar Aerodrome (JSW)","Toranagallu","India","VDY","VOJV",15.1749666667,76.6349472222,1670,5.5,"N",\N,"airport","OurAirports"
 13513,"Shirdi Airport","Shirdi","India","SAG","VASD",19.688611,74.378889,1926,5.5,"N",\N,"airport","OurAirports"

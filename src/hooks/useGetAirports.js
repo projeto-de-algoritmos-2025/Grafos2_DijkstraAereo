@@ -15,15 +15,5 @@ export const useGetAirports = () => {
     (a) => a.Country && a.Country.trim().toLowerCase() === "brazil"
   );
 
-  const teste = brazilAirports.map((item) => {
-    return {
-      name: item.Name,
-      lat: Number(item.Latitude),
-      lon: Number(item.Longitude),
-    };
-  });
-
-  console.log('teste: ', teste)
-
-  return { data: teste, loading, error };
+  return { data: brazilAirports, loading, error };
 };

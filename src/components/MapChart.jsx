@@ -2,12 +2,18 @@ import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import brazilTopoJSON from "@highcharts/map-collection/countries/br/br-all.topo.json";
 import { useGetAirports } from "../hooks/useGetAirports"
+import { useGetRoutes } from "../hooks/useGetRoutes"
+import { formatAirportData } from "../utils/formatAirportData"
+import { formatRoutesData } from "../utils/formatRoutesData"
 
 const FlightRoutesChart = () => {
   const brazilGeoJSON = Highcharts.geojson(brazilTopoJSON, "map");
 
+  const { data: airports } = useGetAirports()
+  const formattedAirportData = formatAirportData(airports)
 
-  const {data: airports } = useGetAirports()
+  const { data: routes } = useGetRoutes(airports)
+  const formattedeRoutesData = formatRoutesData(routes, airports)
 
   const options = {
     chart: {
@@ -30,28 +36,7 @@ const FlightRoutesChart = () => {
         name: "Rota do vôo",
         color: "#008000",
         lineWidth: 2,
-        data: [
-          {
-            type: "Feature",
-            geometry: {
-              type: "LineString",
-              coordinates: [
-                [-47.9292, -15.7942], // Distrito Federal
-                [-46.6333, -23.5505], // São Paulo
-              ],
-            },
-          },
-          {
-            type: "Feature",
-            geometry: {
-              type: "LineString",
-              coordinates: [
-                [-46.6333, -23.5505], // São Paulo
-                [-42.021, -22.129], // Rio de Janeiro
-              ],
-            },
-          },
-        ],
+        data: formattedeRoutesData,
         enableMouseTracking: false,
       },
       {
@@ -67,7 +52,7 @@ const FlightRoutesChart = () => {
             textOutline: '1px white'
           },
         },
-        data: airports,
+        data: formattedAirportData,
       },
     ],
   };
