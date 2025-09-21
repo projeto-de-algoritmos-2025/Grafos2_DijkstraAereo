@@ -1,9 +1,10 @@
-export function formatAirportData (data) {
-   return data?.map((item) => {
+export function formatAirportData(airports) {
+  return airports?.map((airport) => {
     return {
-      name: item.Name,
-      lat: Number(item.Latitude),
-      lon: Number(item.Longitude),
+      id: airport?.AirportID,
+      name: airport?.Name,
+      lat: Number(airport?.Latitude),
+      lon: Number(airport?.Longitude),
     };
   });
 }
