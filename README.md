@@ -45,7 +45,7 @@ npm install
 
 ## Apresentação
 
-Vídeo disponível em: 
+Vídeo disponível em: https://youtu.be/DtiEb61QhBg
 
 ## Outros
 
